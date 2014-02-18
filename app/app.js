@@ -1,6 +1,6 @@
 var it = {};
 
-var app = angular.module('TotalMissionPrep', ['firebase','pascalprecht.translate','ngAnimate','ngRoute','ui.calendar'])
+var app = angular.module('ShoeLessService', ['firebase','pascalprecht.translate','ngAnimate','ngRoute','ui.calendar'])
 .config(function($routeProvider,$translateProvider) {
 	$routeProvider
 	.when('/opportunity/:view', {
@@ -32,5 +32,5 @@ var app = angular.module('TotalMissionPrep', ['firebase','pascalprecht.translate
 
 
 angular.element(document).ready(function() {
-	angular.bootstrap(document, ['TotalMissionPrep']);
+	angular.bootstrap(document, ['ShoeLessService']);
 });
