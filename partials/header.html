@@ -1,0 +1,23 @@
+<header>
+	<div class="account">
+		<span ng-hide="user">
+			<a ng-click="tools.user.signupModal()">{{'SITE.MENU.SIGNUP' | translate}}</a> | 
+			<a ng-click="tools.user.loginModal()">{{'SITE.MENU.LOGIN' | translate}}</a>
+		</span>
+		<span ng-show="user">
+			<a href="#/user/account">{{user.name}}</a>
+		</span>
+	</div>
+	<h1 id="siteTitle">{{'SITE.TITLE' | translate}}</h1>
+	<nav>
+		<ul>
+			<li><a href="#/" title="Home"><i class="fa fa-home"></i> {{'SITE.MENU.HOME' | translate}}</a></li>
+			<li ng-hide="user"><a href="#/about" title="About The Program"><i class="fa fa-flag-o"></i> About</a></li>
+			<li ng-hide="user"><a ng-click="tools.user.signupModal()" title="Signup"><i class="fa fa-rocket"></i> Join</a></li>
+			<li ng-show="user"><a href="#/opportunity/add" title="Organize an opportunity!"><i class="fa fa-plus-square"></i> Create</a></li>
+			<li ng-show="user"><a href="#/opportunity/search" title="Find a new opportunity!"><i class="fa fa-search"></i> Find</a></li>
+			<li ng-show="user"><a href="#/opportunity/promote" title="Discover ways to promote service!"><i class="fa fa-group"></i> Promote</a></li>
+			<li ng-show="user"><a href="#/opportunity/past" title="My past contributions!"><i class="fa fa-picture-o"></i> Reminisce</a></li>
+		</ul>
+	</nav>
+</header>

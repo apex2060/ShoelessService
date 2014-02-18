@@ -1,0 +1,15 @@
+{
+	"SITE":{
+		"TITLE":"Shoeless Service",
+		"MENU":{
+			"SIGNUP":"Signup",
+			"LOGIN":"Login",
+			"HOME":"Home",
+			"ONE":"abc",
+			"TWO":"abc"
+		},
+		"FOOTER":{
+			"COPY_RIGHT":"2014 Creative Design"
+		}
+	}
+}

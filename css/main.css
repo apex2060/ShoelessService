@@ -1,0 +1,287 @@
+/*CUSTOM*/
+html,body{
+	overflow-x:hidden;
+	min-height:100%;
+	/*header: 1e5799*/
+	background: #ffb76b; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#ffb76b), color-stop(50%,#ffa73d), color-stop(51%,#ff7c00), color-stop(100%,#ff7f04)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(-45deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(-45deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(-45deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* IE10+ */
+	background: linear-gradient(135deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb76b', endColorstr='#ff7f04',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+	margin-bottom: 50px;
+}
+header{
+	padding: 5px;
+	background: #1e5799;
+	border-bottom: 5px double #FFF;
+}
+header>nav{
+}
+header>nav>ul{
+    padding-top: 10px;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+header>nav>ul>li{
+	display: inline-block;
+	list-style: none;
+	border: 1px solid #000;
+	margin: 0px;
+	position: relative;
+	font-size: 20px;
+	padding: 3px 30px;
+	text-transform: uppercase;
+	background: #FFF;
+}
+header>nav>ul>li>a{
+	color: #888;
+}
+header>nav>ul>li>a>i{
+	color: #17AAF9;
+}
+header>nav>ul>li>a:hover{
+	text-decoration: none;
+	color: #17AAF9;
+}
+header>nav>ul>li>a>span{
+    font-size: 14px;
+    display: block;
+    color: #DC1408;
+}
+header h1{
+	text-align: center;
+	font-size: 78px;
+	color: #FFF;
+	font-weight: bold;
+	text-shadow: 0px 3px #888;
+	margin-top: 30px;
+}
+header h1 span.e{
+	color: #5BCABE;
+}
+header h1 span.z{
+	color: #2EC283;
+}
+header .account{
+	float: right;
+	margin: 5px;
+}
+footer{
+	position: fixed;
+	width:100%;
+	bottom: 0px;
+	padding: 5px;
+}
+map{
+	display: block;
+}
+
+
+#mainContent{
+	min-height: 600px;
+}
+#mainContent h2{
+}
+
+#opportunity #banner .bannerPicture{
+	display: block;
+	height: 300px;
+	text-align: center;
+	line-height: 300px;
+	font-size: 30px;
+	color:#FFF;
+	background: #CCC;
+	overflow: hidden;
+}
+#opportunity #banner map{
+	display: inline-block;
+	width:200px;
+	height:200px;
+	margin: -100px 0px 50px 100px;
+}
+#opportunity #banner input{
+	width: calc(100% - 340px);
+	height: 90px;
+	margin-top: 10px;
+	font-size: 30px;
+	padding: 10px;
+	font-family: cursive;
+	position: absolute;
+	margin-left: 10px;
+	background: none;
+	color: #FFF;
+	/*box-shadow: 10px 10px 10px #88BFE8;*/
+	border: 0px;
+	border-bottom: 2px solid #1e5799;
+}
+
+
+
+
+
+
+.box{
+	list-style: none;
+	height: 200px;
+	width: 200px;
+	display: inline-block;
+	text-align: center;
+	overflow: hidden;
+	border: 1px dotted silver;
+	margin-right: 5px;
+}
+.box{
+    position: relative;
+}
+.box img{
+	max-width: 100%;
+	max-height: 100%;
+}
+.box .overlay{
+	position: absolute;
+	width: 200px;
+	height: 200px;
+	top: 0px;
+}
+.box .overlay h3{
+    background: #FFF;
+    padding: 5px;
+    margin: 0px;
+}
+.box .overlay .actions{
+    padding: 5px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+.box .overlay .actions li{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #FFF;
+    line-height: 30px;
+    border: 1px solid;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*GENERAL*/
+.child{
+	opacity: 0;
+}
+.parent:hover .child{
+	opacity: 1;
+}
+.hand, [ng-click]{
+	cursor: pointer;
+}
+.dropzone{
+	width: 100%;
+	height: 100px;
+	border: 4px dashed #CCC;
+	font-size: 30px;
+	line-height: 100px;
+	color: #CCC;
+	text-align: center;
+}
+.dropzone-image img{
+	max-width: 100%;
+}
+
+.thumbnail{
+	max-width:150px;
+}
+
+/*OVERRIDES*/
+
+a{
+	cursor: pointer;
+}
+.container{
+	margin-top:50px;
+}
+
+.panel-default>.panel-heading {
+	color: #CCC;
+	/*background: url('../img/site/dark.gif');*/
+	background-color: #333;
+	border-color: #222;
+}
+
+
+.introMap{
+	width: 100%;
+	height: 500px;
+}
+.carousel {
+	margin:0px;
+	height: 222px;
+	margin-bottom: 30px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+	z-index: 10;
+}
+/* Declare heights because of positioning of img element */
+.carousel .item {
+	/*width: 100%;*/
+	height: 222px;
+	background-color: #777;
+}
+.carousel-inner > .item > img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: auto;
+	width: auto;
+	/*margin: 25% 0px;*/
+}
+.photoboard{
+	padding: 15px;
+	background:#000;
+}
+.photoboard .thumb{
+	height: 220px;
+	overflow: hidden;
+}.photoboard .thumb img{
+	height: 100%;
+}
+
+/*RESPONSIVE*/
+/*Tablets*/
+@media (max-width: 1000px) {
+	header>nav>ul>li{
+		width: 49% !important;
+	}
+}
+/*Smart Phones*/
+@media (max-width: 768px) {
+	header>nav>ul>li{
+		width: 100% !important;
+	}
+	footer{
+		position:relative;
+	}
+	#opportunity #banner map{
+		margin-bottom: 0px;
+	}
+	#opportunity #banner input{
+		display: block;
+		width: 100%;
+		position: relative;
+	}
+}

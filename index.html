@@ -1,0 +1,57 @@
+<!-- <html manifest="offline.appcache"> -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Local Service Opportunities</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Find opportunities to serve and get involved in your community.  Organize service projects and make it fun for everyone.">
+
+	<!-- External Refs. -->
+	<link rel="stylesheet" type="text/css" 	href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+	<link rel="stylesheet" media="screen" 	href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" media="screen" 	href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+	<link rel="stylesheet" media="screen" 	href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"></link>
+	<link rel="stylesheet" media="screen" 	href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css"></link>
+
+	<link rel="stylesheet" media="screen" 	href="css/main.css">
+	<link rel="stylesheet" media="screen" 	href="css/animate.css">
+
+	<script type="text/javascript" 			src="//cdn.firebase.com/v0/firebase.js"></script>
+	<script type="text/javascript" 			src="//cdn.firebase.com/v0/firebase-simple-login.js"></script>
+	<script type="text/javascript" 			src="//www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+	<script type="text/javascript" 			src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" 			src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script type="text/javascript" 			src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+	<script type="text/javascript" 			src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.min.js"></script>
+	<script type="text/javascript" 			src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-animate.min.js"></script>
+	<script type="text/javascript" 			src="//maps.google.com/maps/api/js?sensor=true&libraries=geometry,drawing"></script>
+	<script type="text/javascript" 			src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"></script>
+	
+	<!-- // <script type="text/javascript" 			src="js/angular.bootstrap.min.js"></script> -->
+	<script type="text/javascript" 			src="js/angularfire.min.js"></script>
+	<script type="text/javascript" 			src="js/angularTranslation.js"></script>
+	<script type="text/javascript" 			src="js/angularTranslationLoader.js"></script>
+	<script type="text/javascript" 			src="js/calendar.js"></script>
+	<script type="text/javascript" 			src="js/fittext.js"></script>
+
+	<script type="text/javascript" 			src="app/custom.js"></script>
+	<script type="text/javascript" 			src="app/app.js"></script>
+	<script type="text/javascript" 			src="app/services.js"></script>
+	<script type="text/javascript" 			src="app/directives.js"></script>
+	<script type="text/javascript" 			src="app/controllers.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+	<div ng-include="'partials/header.html'"></div>
+	<div ng-view></div>
+	<div ng-include="'partials/footer.html'"></div>
+	
+	<div ng-include="'partials/user/loginModal.html'"></div>
+	<div ng-include="'partials/user/settingsModal.html'"></div>
+	<div ng-include="'partials/user/signupModal.html'"></div>
+
+	<!-- GOOGLE ANALYTICS -->
+	<script>
+	</script>
+</body>
+</html>
