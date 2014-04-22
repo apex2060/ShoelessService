@@ -3,15 +3,7 @@ html,body{
 	overflow-x:hidden;
 	min-height:100%;
 	/*header: 1e5799*/
-	background: #ffb76b; /* Old browsers */
-	background: -moz-linear-gradient(-45deg,  #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#ffb76b), color-stop(50%,#ffa73d), color-stop(51%,#ff7c00), color-stop(100%,#ff7f04)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(-45deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(-45deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(-45deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* IE10+ */
-	background: linear-gradient(135deg,  #ffb76b 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb76b', endColorstr='#ff7f04',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+	background: #EEE;
 	margin-bottom: 50px;
 }
 header{
@@ -94,8 +86,12 @@ map{
 	line-height: 300px;
 	font-size: 30px;
 	color:#FFF;
-	background: #CCC;
+	background: #BBB;
 	overflow: hidden;
+	cursor: pointer;
+}
+#opportunity #banner img{
+	width: 100%;
 }
 #opportunity #banner map{
 	display: inline-block;
@@ -113,7 +109,7 @@ map{
 	position: absolute;
 	margin-left: 10px;
 	background: none;
-	color: #FFF;
+	color: #1e5799;
 	/*box-shadow: 10px 10px 10px #88BFE8;*/
 	border: 0px;
 	border-bottom: 2px solid #1e5799;
@@ -189,6 +185,24 @@ map{
 .hand, [ng-click]{
 	cursor: pointer;
 }
+
+.introMap{
+	width: 100%;
+	height: 500px;
+}
+.photoboard{
+	padding: 15px;
+	background:#000;
+}
+.photoboard .thumb{
+	height: 220px;
+	overflow: hidden;
+}.photoboard .thumb img{
+	height: 100%;
+}
+
+
+
 .dropzone{
 	width: 100%;
 	height: 100px;
@@ -205,27 +219,24 @@ map{
 .thumbnail{
 	max-width:150px;
 }
+img.grayscale {
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+	filter: gray; /* IE6-9 */
+	-webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+}
 
 /*OVERRIDES*/
-
 a{
 	cursor: pointer;
 }
 .container{
 	margin-top:50px;
 }
-
 .panel-default>.panel-heading {
 	color: #CCC;
 	/*background: url('../img/site/dark.gif');*/
 	background-color: #333;
 	border-color: #222;
-}
-
-
-.introMap{
-	width: 100%;
-	height: 500px;
 }
 .carousel {
 	margin:0px;
@@ -250,15 +261,10 @@ a{
 	width: auto;
 	/*margin: 25% 0px;*/
 }
-.photoboard{
-	padding: 15px;
-	background:#000;
-}
-.photoboard .thumb{
-	height: 220px;
-	overflow: hidden;
-}.photoboard .thumb img{
-	height: 100%;
+.container .jumbotron{
+	border-radius: 0px;
+	border: 5px solid #1E5799;
+	box-shadow: 5px 5px 5px #333;
 }
 
 /*RESPONSIVE*/

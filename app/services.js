@@ -44,17 +44,24 @@ app.factory('geoService', function ($q) {
 			return miles;
 		},
 		parsePoint:function(geo){
-			return {
-				__type:"GeoPoint",
-				latitude:geo.coords.latitude,
-				longitude:geo.coords.longitude
-			}
+			if(geo.coords)
+				return {
+					__type:"GeoPoint",
+					latitude:geo.coords.latitude,
+					longitude:geo.coords.longitude
+				}
+			else
+				return {
+					__type:"GeoPoint",
+					latitude:geo.latitude,
+					longitude:geo.longitude
+				}
 		},
 		parseSearch:function(geoShape){
 			var where = {};
 			if(geoShape.type=='circle'){
 				where={
-					"location": {
+					"geo": {
 						"$nearSphere": {
 							"__type": "GeoPoint",
 							"latitude": geoShape.latitude,
@@ -65,7 +72,7 @@ app.factory('geoService', function ($q) {
 				}
 			}else if(geoShape.type=='rectangle'){
 				where = {
-					"location": {
+					"geo": {
 						"$within": {
 							"$box": [{
 								"__type": "GeoPoint",
@@ -81,7 +88,7 @@ app.factory('geoService', function ($q) {
 				}
 			}else if(geoShape.type=='marker'){
 				where={
-					"location": {
+					"geo": {
 						"$nearSphere": {
 							"__type": "GeoPoint",
 							"latitude": geoShape.latitude,
@@ -197,4 +204,22 @@ app.factory('userService', function ($rootScope, $http, config, geoService) {
  	}
 	it.userService = userService;
 	return userService;
+});
+
+app.factory('fileService', function ($http, config) {
+	var fileService = {
+		upload:function(details,b64,successCallback,errorCallback){
+			var file = new Parse.File(details.name, { base64: b64});
+			file.save().then(function(data) {
+				if(successCallback)
+					successCallback(data);
+			}, function(error) {
+				if(errorCallback)
+					errorCallback(error)
+			});
+		}
+	}
+
+	it.fileService = fileService;
+	return fileService;
 });

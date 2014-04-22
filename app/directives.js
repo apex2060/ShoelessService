@@ -25,67 +25,6 @@ app.directive('contenteditable', function() {
 	};
 });
 
-app.directive('dropToUpload', function() {
-	return {
-		restrict: 'A',
-		scope: {
-			file: '=',
-			fileName: '=',
-			callback: '='
-		},
-		link: function(scope, element, attrs) {
-			var processDragOverOrEnter, checkSize, isTypeValid;
-			processDragOverOrEnter = function(event) {
-				if (event != null) {
-					event.preventDefault();
-				}
-				event.dataTransfer.effectAllowed = 'copy';
-				return false;
-			};
-			checkSize = function(size) {
-				var _ref;
-				if (((_ref = attrs.maxFileSize) === (void 0) || _ref === '') || (size / 1024) / 1024 < attrs.maxFileSize) {
-					return true;
-				} else {
-					alert("File must be smaller than " + attrs.maxFileSize + " MB");
-					return false;
-				}
-			};
-			isTypeValid = function(type) {
-				var validMimeTypes = attrs.validMimeTypes;
-				if ((validMimeTypes === (void 0) || validMimeTypes === '') || validMimeTypes.indexOf(type) > -1) {
-					return true;
-				} else {
-					alert("Invalid file type.  File must be one of following types " + validMimeTypes);
-					return false;
-				}
-			};
-			element.bind('dragover', processDragOverOrEnter);
-			element.bind('dragenter', processDragOverOrEnter);
-			return element.bind('drop', function(event) {
-				var file, name, reader, size, type;
-				if (event != null) {
-					event.preventDefault();
-				}
-				file = event.dataTransfer.files[0];
-				name = file.name;
-				type = file.type;
-				size = file.size;
-				reader = new FileReader();
-				reader.onload = function(evt) {
-					if (checkSize(size) && isTypeValid(type)) {
-						return scope.$apply(function() {
-							scope.callback(file,evt.target.result)
-						});
-					}
-				};
-				reader.readAsDataURL(file);
-				return false;
-			});
-		}
-	};
-});
-
 app.directive('mediaManager', function() {
 	return {
 		restrict: 'A',
@@ -96,10 +35,14 @@ app.directive('mediaManager', function() {
 						'<div ng-transclude></div>'+
 					'</div>',
 		scope: {
-			callback: '=mediaManager',
+			callback: 	'=mediaManager'
 		},
 		link: function(scope, elem, attrs, ctrl) {
-			it.elem = elem;
+			if(typeof(scope.callback)!='function'){
+				console.error('mediaManager: no callback defined.',scope.callback)
+				return;
+			}
+
 			processDragOverOrEnter = function(event) {
 				if (event != null) {
 					event.preventDefault();
@@ -107,6 +50,40 @@ app.directive('mediaManager', function() {
 				event.originalEvent.dataTransfer.effectAllowed = 'copy';
 				return false;
 			};
+			resizeImage = function(imageData, maxWidth, maxHeight, callback){
+
+				var img = new Image();
+				img.onload = function () {
+					var canvas = document.createElement('canvas');
+					var ctx = canvas.getContext("2d");
+					ctx.drawImage(img, 0, 0);
+					var MAX_WIDTH = maxWidth;
+					var MAX_HEIGHT = maxHeight;
+					var width = img.width;
+					var height = img.height;
+					if (width > height) {
+						if (width > MAX_WIDTH) {
+							height *= MAX_WIDTH / width;
+							width = MAX_WIDTH;
+						}
+					} else {
+						if (height > MAX_HEIGHT) {
+							width *= MAX_HEIGHT / height;
+							height = MAX_HEIGHT;
+						}
+					}
+					canvas.width = width;
+					canvas.height = height;
+					var ctx = canvas.getContext("2d");
+					ctx.drawImage(img, 0, 0, width, height);
+					var dataurl = canvas.toDataURL("image/png");
+
+					if(typeof(callback)=='function')
+						callback(dataurl);
+				}
+				img.src = imageData;
+			}
+
 
 			elem.bind('click', function(e){
 				//At some point, this may end up being a call to open a modal which links to the media list
@@ -119,16 +96,22 @@ app.directive('mediaManager', function() {
 					e.preventDefault();
 				}
 				file = e.target.files[0];
-				name = file.name;
-				type = file.type;
-				size = file.size;
-				reader = new FileReader();
-				reader.onload = function(evt) {
-					return scope.$apply(function() {
-						scope.callback(file,evt.target.result)
-					});
-				};
-				reader.readAsDataURL(file);
+				if(file){
+					name = file.name;
+					type = file.type;
+					size = file.size;
+					reader = new FileReader();
+					reader.onload = function(evt) {
+						if(attrs.maxHeight || attrs.maxWidth){
+							resizeImage(evt.target.result, attrs.maxHeight, attrs.maxWidth, function(newImage){
+								scope.callback(file,newImage)
+							})
+						}else{
+							scope.callback(file,evt.target.result)
+						}
+					};
+					reader.readAsDataURL(file);
+				}
 				return false;
 			});
 			elem.bind('dragover', processDragOverOrEnter);
@@ -138,16 +121,19 @@ app.directive('mediaManager', function() {
 				if (event != null) {
 					event.preventDefault();
 				}
-				it.event = event;
 				file = event.originalEvent.dataTransfer.files[0];
 				name = file.name;
 				type = file.type;
 				size = file.size;
 				reader = new FileReader();
 				reader.onload = function(evt) {
-					return scope.$apply(function() {
+					if(attrs.maxHeight || attrs.maxWidth){
+						resizeImage(evt.target.result, attrs.maxHeight, attrs.maxWidth, function(newImage){
+							scope.callback(file,newImage)
+						})
+					}else{
 						scope.callback(file,evt.target.result)
-					});
+					}
 				};
 				reader.readAsDataURL(file);
 				return false;
@@ -185,7 +171,6 @@ app.directive('map', ['geoService', function(geoService){
 			}
 
 			/*OVERRIDE DEFAULTS IF PROVIDED*/
-			it.mapAttr = attr;
 			if(attr.selectors)
 				scope.config.selectors = attr.selectors.split('|');
 			if(attr.color)
@@ -208,67 +193,9 @@ app.directive('map', ['geoService', function(geoService){
 				scope.consts.modes.push(google.maps.drawing.OverlayType[elem]);
 			});
 
-			geoService.location().then(function(geo){
-				scope.geo=geo;
-				var mapOptions = {
-					center: new google.maps.LatLng(geo.coords.latitude,geo.coords.longitude),
-					zoom: scope.config.zoom
-				};
-				scope.map = new google.maps.Map(elem[0],mapOptions);
-
-				var polyOptions = {
-					strokeWeight: 0,
-					fillOpacity: 0.45,
-					editable: false
-				};
-				drawingManager = new google.maps.drawing.DrawingManager({
-					drawingControlOptions: {
-						position: google.maps.ControlPosition.TOP_CENTER,
-						drawingModes: scope.consts.modes
-					},
-					drawingMode: scope.consts.modes[0],
-					rectangleOptions: polyOptions,
-					circleOptions: polyOptions,
-					map: scope.map
-				});
-
-				google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
-					scope.deleteOld();
-					var newShape = e.overlay;
-						newShape.type = e.type;
-						scope.setCurrent(newShape);
-						if(typeof(scope.callback)=='function'){
-							if(scope.config.advanced)
-								scope.callback(newShape);
-							else
-								scope.callback(scope.normalizeShape(newShape))
-						}
-				});
-
-				if(scope.config.initmarker)
-					scope.consts.currentShape = new google.maps.Marker({
-						map:scope.map,
-						animation: google.maps.Animation.DROP,
-						position: mapOptions.center
-					});
-
-				var rectangleOptions = drawingManager.get('rectangleOptions');
-				rectangleOptions.fillColor = scope.config.color;
-				drawingManager.set('rectangleOptions', rectangleOptions);
-
-				var circleOptions = drawingManager.get('circleOptions');
-				circleOptions.fillColor = scope.config.color;
-				drawingManager.set('circleOptions', circleOptions);
-			})
-			scope.setCurrent=function setCurrent(shape) {
-				scope.consts.currentShape = shape;
-			}
-			scope.deleteOld=function deleteOld() {
-				if (scope.consts.currentShape) {
-					scope.consts.currentShape.setMap(null);
-				}
-			}
-			scope.normalizeShape=function normalizeShape(geoShape){
+			//Important Functions
+			function normalizeShape(geoShape){
+				var normalized = {};
 				if(geoShape.type=='circle'){
 					normalized={
 						"type": "circle",
@@ -297,7 +224,74 @@ app.directive('map', ['geoService', function(geoService){
 				}
 				return normalized;
 			}
-			it.mapScope = scope;
+			function returnResults(newShape){
+				if(typeof(scope.callback)=='function'){
+					if(scope.config.advanced)
+						scope.callback(newShape);
+					else
+						scope.callback(normalizeShape(newShape))
+				}
+			}
+
+			geoService.location().then(function(geo){
+				scope.geo=geo;
+				var mapOptions = {
+					center: new google.maps.LatLng(geo.coords.latitude,geo.coords.longitude),
+					zoom: scope.config.zoom
+				};
+				scope.map = new google.maps.Map(elem[0],mapOptions);
+
+				var polyOptions = {
+					strokeWeight: 0,
+					fillOpacity: 0.45,
+					editable: false
+				};
+				drawingManager = new google.maps.drawing.DrawingManager({
+					drawingControlOptions: {
+						position: google.maps.ControlPosition.TOP_CENTER,
+						drawingModes: scope.consts.modes
+					},
+					drawingMode: scope.consts.modes[0],
+					rectangleOptions: polyOptions,
+					circleOptions: polyOptions,
+					map: scope.map
+				});
+				
+
+				google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+					scope.deleteOld();
+					var newShape = e.overlay;
+						newShape.type = e.type;
+						scope.setCurrent(newShape);
+						returnResults(newShape)
+				});
+
+				if(scope.config.initmarker){
+					scope.consts.currentShape = new google.maps.Marker({
+						type: 'marker',
+						map:scope.map,
+						animation: google.maps.Animation.DROP,
+						position: mapOptions.center
+					});
+					returnResults(scope.consts.currentShape)
+				}
+
+				var rectangleOptions = drawingManager.get('rectangleOptions');
+				rectangleOptions.fillColor = scope.config.color;
+				drawingManager.set('rectangleOptions', rectangleOptions);
+
+				var circleOptions = drawingManager.get('circleOptions');
+				circleOptions.fillColor = scope.config.color;
+				drawingManager.set('circleOptions', circleOptions);
+			})
+			scope.setCurrent=function setCurrent(shape) {
+				scope.consts.currentShape = shape;
+			}
+			scope.deleteOld=function deleteOld() {
+				if (scope.consts.currentShape) {
+					scope.consts.currentShape.setMap(null);
+				}
+			}
 		}
 	}
 }]);

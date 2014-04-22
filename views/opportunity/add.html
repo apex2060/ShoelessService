@@ -1,12 +1,15 @@
 <div id="mainContent" class="container">
-	<form ng-submit="tools.add.save()">
+	<form ng-submit="tools.opportunity.save()">
 		<div class="row" id="opportunity">
 			<div class="col-lg-12" id="banner">
-				<div media-manager="tools.add.setPicture" class="bannerPicture">
+				<div media-manager="tools.opportunity.setPicture" class="bannerPicture" max-width="1200">
 					<div ng-hide="temp.opportunity.picture" class="media">Add Picture</div>
-					<img ng-show="temp.opportunity.picture" ng-src="{{temp.opportunity.picture.src}}">
+					<img id="opportunityImgPreview"ng-show="temp.opportunity.picture" 
+							ng-class="temp.opportunity.picture.class" 
+							ng-src="{{temp.opportunity.picture.src}}" 
+							title="{{temp.opportunity.picture.name}}">
 				</div>
-				<map points="data.points" zoom="16" selectors="MARKER" initmarker="true" callback="tools.add.setGeo"></map>
+				<map points="data.points" zoom="16" selectors="MARKER" initmarker="true" callback="tools.opportunity.setGeo"></map>
 				<input type="text" placeholder="A Catchy Title" ng-model="temp.opportunity.title">
 			</div>
 
@@ -17,11 +20,11 @@
 				</div>
 				<div class="form-group">
 					<label for="oppStartDate" class="control-label">Start Date</label>
-					<input type="datetime" class="form-control" id="oppStartDate" placeholder="Start Date" ng-model="temp.opportunity.startDate">
+					<input type="date" class="form-control" id="oppStartDate" placeholder="Start Date" ng-model="temp.opportunity.startDate">
 				</div>
 				<div class="form-group">
 					<label for="oppEndDate" class="control-label">End Date</label>
-					<input type="datetime" class="form-control" id="oppEndDate" placeholder="End Date" ng-model="temp.opportunity.endDate">
+					<input type="date" class="form-control" id="oppEndDate" placeholder="End Date" ng-model="temp.opportunity.endDate">
 				</div>
 				<div class="form-group">
 					<label for="oppAddress" class="control-label">Address</label>
@@ -31,7 +34,7 @@
 					<label for="oppContact" class="control-label">Contact Information</label>
 					<textarea class="form-control" id="oppContact" placeholder="Contact Information" ng-model="temp.opportunity.contact"></textarea>
 				</div>
-				<div media-manager="tools.add.setPicture" class="banner">
+				<div media-manager="tools.opportunity.setPicture" class="banner">
 					<span ng-show="temp.opportunity.picture">{{temp.opportunity.picture.name}}</span>
 					<span ng-hide="temp.opportunity.picture">Add Picture</span>
 				</div>
@@ -44,7 +47,11 @@
 						<textarea class="form-control" id="oppDescription" rows="15" placeholder="A Catchy Description" ng-model="temp.opportunity.description"></textarea>
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-success pull-right">Publish Opportunity</button>
+					<input type="submit" class="btn btn-primary" 
+					ng-hide="temp.opportunity.picture.temp" value="Publish Opportunity">
+
+					<input type="button" class="btn btn-inverse" 
+					ng-show="temp.opportunity.picture.temp" title="Please wait for the picture to upload." value="Wait">
 				</div>
 			</div>
 		</div>
